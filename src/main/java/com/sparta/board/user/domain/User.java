@@ -3,6 +3,7 @@ package com.sparta.board.user.domain;
 import com.sparta.board.common.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,37 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String profileImageUrl;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @Builder
+    private User(
+            String account,
+            String encodedPassword,
+            String nickName,
+            String profileImageUrl,
+            Role role
+    ) {
+        this.account = account;
+        this.password = encodedPassword;
+        this.nickName = nickName;
+        this.profileImageUrl = profileImageUrl;
+        this.role = role;
+    }
+
+    public static User create(
+            String account,
+            String encodedPassword,
+            String nickName,
+            String profileImageUrl,
+            Role role
+    ) {
+        return new User(
+                account,
+                encodedPassword,
+                nickName,
+                profileImageUrl,
+                role);
+    }
 }
