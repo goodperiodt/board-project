@@ -33,17 +33,17 @@ public class User extends BaseEntity {
 
     @Builder
     private User(
-            String account,
+            String _account,
             String encodedPassword,
-            String nickName,
-            String profileImageUrl,
-            Role role
+            String _nickName,
+            String _profileImageUrl,
+            Role _role
     ) {
-        this.account = account;
-        this.password = encodedPassword;
-        this.nickName = nickName;
-        this.profileImageUrl = profileImageUrl;
-        this.role = role;
+        account = _account;
+        password = encodedPassword;
+        nickName = _nickName;
+        profileImageUrl = _profileImageUrl;
+        role = _role;
     }
 
     public static User create(
@@ -59,5 +59,9 @@ public class User extends BaseEntity {
                 nickName,
                 profileImageUrl,
                 role);
+    }
+
+    public String account() {
+        return this.account;
     }
 }

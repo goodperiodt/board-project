@@ -32,25 +32,28 @@ public class SignUpRequest {
         return password;
     }
 
-    public String getProfileImageUrlOrDefault() {
-        return this.profileImageUrl = (profileImageUrl!=null)? profileImageUrl : "image.png";
+    public boolean isMaster(String _masterCode) {
+        return masterCode.equals(_masterCode);
     }
 
-    public boolean isMaster() {
-        return masterCode.equals("1234");
-    }
-
-    public Role assignRole() {
-        return isMaster()? Role.MASTER:Role.MEMBER;
-    }
-
-    public User toEntity(String encodedPassword) {
+    public User toEntity(
+            String encodedPassword,
+            String profileImageUrl,
+            Role role) {
         return User.create(
                 account,
                 encodedPassword,
                 nickName,
-                getProfileImageUrlOrDefault(),
-                assignRole()
+                profileImageUrl,
+                role
         );
+    }
+
+    public boolean isInputProfileImageUrl() {
+        return (profileImageUrl!=null && !profileImageUrl.isBlank());
+    }
+
+    public String profileImageUrl() {
+        return profileImageUrl;
     }
 }
