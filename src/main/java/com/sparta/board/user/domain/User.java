@@ -67,8 +67,4 @@ public class User extends BaseEntity {
                 profileImageUrl,
                 role);
     }
-
-    public String account() {
-        return this.account;
-    }
 }

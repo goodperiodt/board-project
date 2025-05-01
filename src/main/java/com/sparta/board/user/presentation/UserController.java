@@ -19,7 +19,9 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequest request) {
-        String account = userService.signUp(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(account);
+        String email = userService.signUp(request);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(email);
     }
 }

@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
         User user = request.toEntity(encodedPassword);
         User saved = userRepository.save(user);
-        return saved.account();
+        return saved.getEmail();
     }
 
     private String encodePassword(String rawPassword) {
