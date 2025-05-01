@@ -1,0 +1,11 @@
+### @name 회원 가입
+POST http://localhost:8080/sign-up
+Content-Type: application/json
+
+{
+  "email": "test@gami.com",
+  "password": "password",
+  "nickname": "닉네임",
+  "profileImageUrl": "test-url",
+  "role": "MASTER"
+}
