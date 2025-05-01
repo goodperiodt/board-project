@@ -8,7 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Entity(name = "t_users")
+@Entity
+@Table(
+        name = "t_users",
+        uniqueConstraints = @UniqueConstraint(
+                name = "UK_USER_email",
+                columnNames = "email"
+        )
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
     @Id
@@ -16,13 +23,13 @@ public class User extends BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String account;
+    private String email;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
-    private String nickName;
+    private String nickname;
 
     @Column(nullable = false)
     private String profileImageUrl;
@@ -33,30 +40,30 @@ public class User extends BaseEntity {
 
     @Builder
     private User(
-            String _account,
+            String email,
             String encodedPassword,
-            String _nickName,
-            String _profileImageUrl,
-            Role _role
+            String nickname,
+            String profileImageUrl,
+            Role role
     ) {
-        account = _account;
-        password = encodedPassword;
-        nickName = _nickName;
-        profileImageUrl = _profileImageUrl;
-        role = _role;
+        this.email = email;
+        this.password = encodedPassword;
+        this.nickname = nickname;
+        this.profileImageUrl = profileImageUrl;
+        this.role = role;
     }
 
     public static User create(
-            String account,
+            String email,
             String encodedPassword,
-            String nickName,
+            String nickname,
             String profileImageUrl,
             Role role
     ) {
         return new User(
-                account,
+                email,
                 encodedPassword,
-                nickName,
+                nickname,
                 profileImageUrl,
                 role);
     }

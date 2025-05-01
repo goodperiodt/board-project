@@ -8,52 +8,26 @@ import lombok.Getter;
 @Getter
 public class SignUpRequest {
     @NotBlank(message = "아이디 입력은 필수입니다.")
-    private String account;
+    private String email;
 
     @NotBlank(message = "비밀번호 입력은 필수입니다.")
     private String password;
 
     @NotBlank(message = "닉네임 입력은 필수입니다.")
-    private String nickName;
+    private String nickname;
 
-    private String masterCode;
+    private Role role;
 
+    @NotBlank(message = "프로필 이미지는 필수입니다.")
     private String profileImageUrl;
 
-    public String account() {
-        return account;
-    }
-
-    public String nickName() {
-        return nickName;
-    }
-
-    public String password() {
-        return password;
-    }
-
-    public boolean isMaster(String _masterCode) {
-        return masterCode.equals(_masterCode);
-    }
-
-    public User toEntity(
-            String encodedPassword,
-            String profileImageUrl,
-            Role role) {
+    public User toEntity(String encodedPassword) {
         return User.create(
-                account,
+                email,
                 encodedPassword,
-                nickName,
+                nickname,
                 profileImageUrl,
                 role
         );
-    }
-
-    public boolean isInputProfileImageUrl() {
-        return (profileImageUrl!=null && !profileImageUrl.isBlank());
-    }
-
-    public String profileImageUrl() {
-        return profileImageUrl;
     }
 }
