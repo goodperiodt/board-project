@@ -3,9 +3,11 @@ package com.sparta.board.user.presentation.dto.request;
 import com.sparta.board.user.domain.Role;
 import com.sparta.board.user.domain.User;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class SignUpRequest {
     @NotBlank(message = "아이디 입력은 필수입니다.")
     private String email;
