@@ -9,3 +9,17 @@ Content-Type: application/json
   "profileImageUrl": "test-url",
   "role": "MASTER"
 }
+
+### 로그인
+POST http://localhost:8080/sign-in
+Content-Type: application/json
+
+{
+  "email": "test@gami.com",
+  "password": "password"
+}
+
+###
+GET http://localhost:8080/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGdhbWkuY29tIiwicm9sZSI6Ik1BU1RFUiIsImV4cCI6MTc0OTcwMzYxNCwiaWF0IjoxNzQ5NzAxODE0fQ.SmQ3mZX-Fu-moUvTzeodjoVkxWS4cFrGez3el2e7qDa7NXeuDujA5o2SEEJ2Gf0xXrbmqj1fwgJgNAt2XtXGPg

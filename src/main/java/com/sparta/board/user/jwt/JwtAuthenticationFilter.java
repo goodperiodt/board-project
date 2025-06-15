@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
-    private AuthenticatedUserInfo extractUseDetails(Authentication authResult) {
+    private AuthenticatedUserInfo extractUserDetails(Authentication authResult) {
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         Role role = ((UserDetailsImpl) authResult.getPrincipal()).getRole();
         return new AuthenticatedUserInfo(username, role);
@@ -65,7 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
-        AuthenticatedUserInfo authenticatedUserInfo = extractUseDetails(authResult);
+        AuthenticatedUserInfo authenticatedUserInfo = extractUserDetails(authResult);
         String accessToken = jwtUtil.createAccessToken(authenticatedUserInfo);
         jwtUtil.loginResponse(accessToken, response);
     }

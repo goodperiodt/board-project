@@ -24,7 +24,7 @@ public class UserValidator {
     private void checkDuplicateEmail(String email) {
         if (userRepository.existsByEmail(email))
             throw new UserException(UserErrorCode.DUPLICATED_EMAIL);
-    }
+    } 
 
     private void checkDuplicateNickname(String nickname) {
         if (userRepository.existsByNickname(nickname))
@@ -32,20 +32,15 @@ public class UserValidator {
     }
 
     public User validateUserLoginRequest(LoginRequest request) {
-        User user = getByEmailOrThrow(request.getEmail());
-        matchesPassword(request.getPassword(),
-                user.getPassword()
+        return matchingUsernameAndPassword(
+                request.getEmail(),
+                request.getPassword()
         );
-        return user;
     }
 
-    private void matchesPassword(String rawPassword, String encodedPassword) {
-            if(!passwordEncoder.matches(rawPassword, encodedPassword))
-                throw new UserException(UserErrorCode.INVALID_PASSWORD);
-    }
-
-    private User getByEmailOrThrow(String email) {
-        return userRepository.findByEmail(email)
+    private User matchingUsernameAndPassword(String reqEmail, String reqPassword) {
+        return userRepository.findByEmail(reqEmail)
+                .filter(user->user.isSamePassword(reqPassword))
                 .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
     }
 }

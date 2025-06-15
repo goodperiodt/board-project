@@ -1,11 +1,15 @@
 package com.sparta.board.user.domain;
 
 import com.sparta.board.common.domain.BaseEntity;
+import com.sparta.board.user.exception.UserErrorCode;
+import com.sparta.board.user.exception.UserException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static com.sparta.board.user.config.SecurityConfig.passwordEncoder;
 
 @Getter
 @Entity
@@ -28,7 +32,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nickname;
 
     @Column(nullable = false)
@@ -66,5 +70,11 @@ public class User extends BaseEntity {
                 nickname,
                 profileImageUrl,
                 role);
+    }
+
+    public boolean isSamePassword(String reqPassword) {
+        if(!passwordEncoder().matches(reqPassword, password))
+            throw new UserException(UserErrorCode.INVALID_PASSWORD);
+        return true;
     }
 }
